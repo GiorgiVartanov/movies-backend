@@ -1,0 +1,3 @@
+[submodule "movies-frontend"]
+	path = frontend
+	url = https://github.com/GiorgiVartanov/movies-frontend

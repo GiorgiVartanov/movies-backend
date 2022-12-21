@@ -51,8 +51,6 @@ const deleteFavorite = asyncHandler(async (req, res) => {
         user: req.user.id,
     })
 
-    console.log({ favorite })
-
     // Check if it exists
     if (!favorite) {
         res.status(400)

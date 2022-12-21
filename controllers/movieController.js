@@ -11,7 +11,8 @@ const getMovies = asyncHandler(async (req, res, next) => {
 
     let movies
 
-    const blockedMovies = Block.find({ user: req.user })
+    const blockedMovies = await Block.find({ user: req.user })
+
     const blockedMovieIds = blockedMovies.map(
         (blockedMovie) => blockedMovie.movieId
     )

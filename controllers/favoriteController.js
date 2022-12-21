@@ -43,10 +43,12 @@ const addFavorite = asyncHandler(async (req, res) => {
     res.status(200).json(favorite)
 })
 
-// DELETE /api/favorite
+// DELETE /api/favorites
 const deleteFavorite = asyncHandler(async (req, res) => {
-    console.log(req.params.id)
-    const favorite = await Favorite.findById(req.params.id)
+    const favorite = await Favorite.findOne({
+        movieId: req.params.id,
+        user: req.user.id,
+    })
 
     // Check if it exists
     if (!favorite) {
@@ -60,8 +62,8 @@ const deleteFavorite = asyncHandler(async (req, res) => {
         throw new Error("User not found")
     }
 
-    // make sure the logged in user matches the todo's user
-    if (todo.user.toString() !== req.user.id) {
+    // make sure the logged in user matches the favorite's user
+    if (favorite.user.toString() !== req.user.id) {
         res.status(401)
         throw new Error("User not authorized")
     }

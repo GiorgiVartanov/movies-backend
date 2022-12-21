@@ -21,7 +21,6 @@ const getBlocked = asyncHandler(async (req, res) => {
 
 // GET /api/block/ids
 const getBlockedIds = asyncHandler(async (req, res) => {
-    // console.log({ user: req.user })
     const blockedMovies = await Block.find({ user: req.user._id })
 
     const blockedIds = blockedMovies.map((blockedMovie) => blockedMovie.movieId)

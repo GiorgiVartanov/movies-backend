@@ -10,8 +10,6 @@ const getFavorites = asyncHandler(async (req, res) => {
 
     const favoriteIds = favorites.map((favorite) => favorite.movieId)
 
-    console.log({ user: req.user })
-
     const favoriteMovies = await Movies.find({
         _id: { $in: favoriteIds },
     })

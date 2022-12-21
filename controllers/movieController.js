@@ -7,7 +7,7 @@ const Block = require("../models/blockModel")
 const getMovies = asyncHandler(async (req, res, next) => {
     const amount = req.query.amount || 20
     const offset = req.query.offset || 0
-    const genres = req.query.genres.split(",") || ""
+    const genres = req.query.genres?.split(",") || ""
 
     let movies
 
@@ -17,7 +17,7 @@ const getMovies = asyncHandler(async (req, res, next) => {
         (blockedMovie) => blockedMovie.movieId
     )
 
-    if (genres.length > 0 && genres[0] !== "") {
+    if (genres?.length > 0 && genres[0] !== "") {
         movies = await Movie.find({
             genre_ids: { $all: genres },
             _id: { $nin: blockedMovieIds },
@@ -25,7 +25,11 @@ const getMovies = asyncHandler(async (req, res, next) => {
             .skip(offset)
             .limit(amount)
     } else {
-        movies = await Movie.find().skip(offset).limit(amount)
+        movies = await Movie.find({
+            _id: { $nin: blockedMovieIds },
+        })
+            .skip(offset)
+            .limit(amount)
     }
 
     res.status(200).json(movies)

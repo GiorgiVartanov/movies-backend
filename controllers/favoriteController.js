@@ -45,6 +45,7 @@ const addFavorite = asyncHandler(async (req, res) => {
 
 // DELETE /api/favorite
 const deleteFavorite = asyncHandler(async (req, res) => {
+    console.log(req.params.id)
     const favorite = await Favorite.findById(req.params.id)
 
     // Check if it exists
@@ -67,7 +68,7 @@ const deleteFavorite = asyncHandler(async (req, res) => {
 
     await favorite.remove()
 
-    res.status(200).json({ _id: req.params.id })
+    res.status(200).json({ id: req.params.id })
 })
 
 module.exports = {

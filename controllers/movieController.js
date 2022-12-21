@@ -6,7 +6,7 @@ const Movie = require("../models/movieModel")
 const getMovies = asyncHandler(async (req, res, next) => {
     const amount = req.query.amount || 20
     const offset = req.query.offset || 0
-    const genres = req.query.genres.split(",")
+    const genres = req.query.genres.split(",") || ""
 
     let movies
 

@@ -6,10 +6,11 @@ const Movies = require("../models/movieModel")
 
 // GET /api/favorites/all
 const getFavorites = asyncHandler(async (req, res) => {
-    console.log({ user: req.user })
     const favorites = await Favorite.find({ user: req.user })
 
     const favoriteIds = favorites.map((favorite) => favorite.movieId)
+
+    console.log({ user: req.user })
 
     const favoriteMovies = await Movies.find({
         _id: { $in: favoriteIds },

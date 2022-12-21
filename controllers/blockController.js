@@ -1,13 +1,11 @@
 const asyncHandler = require("express-async-handler")
 
 const User = require("../models/userModel")
-const Favorite = require("../models/favoriteModel")
 const Movies = require("../models/movieModel")
 const Block = require("../models/blockModel")
 
 // GET /api/blockList/all
 const getBlocked = asyncHandler(async (req, res) => {
-    console.log({ user: req.user })
     const blockedMovieList = await Block.find({ user: req.user })
 
     const blockedIds = blockedMovieList.map(
@@ -21,17 +19,17 @@ const getBlocked = asyncHandler(async (req, res) => {
     res.status(200).json(blockedMovies)
 })
 
-// GET /api/blockList/ids
+// GET /api/block/ids
 const getBlockedIds = asyncHandler(async (req, res) => {
-    console.log({ user: req.user })
-    const favorites = await Favorite.find({ user: req.user })
+    // console.log({ user: req.user })
+    const blockedMovies = await Block.find({ user: req.user._id })
 
-    const favoriteIds = favorites.map((favorite) => favorite.movieId)
+    const blockedIds = blockedMovies.map((blockedMovie) => blockedMovie.movieId)
 
-    res.status(200).json(favoriteIds)
+    res.status(200).json(blockedIds)
 })
 
-// POST /api/blockList
+// POST /api/block
 const addBlocked = asyncHandler(async (req, res) => {
     if (!req.body.movieId) {
         res.status(400)

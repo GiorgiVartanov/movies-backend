@@ -36,14 +36,14 @@ const addBlocked = asyncHandler(async (req, res) => {
     }
 
     // Check if user already has movie with this id in blocked
-    const alreadyInFavorites = await Block.findOne({
+    const alreadyBlocked = await Block.findOne({
         movieId: req.body.movieId,
         user: req.user.id,
     })
 
-    if (alreadyInFavorites) {
+    if (alreadyBlocked) {
         res.status(400)
-        throw new Error("Already in favorites")
+        throw new Error("Already blocked")
     }
 
     const blockedMovie = await Block.create({

@@ -6,6 +6,7 @@ const Movies = require("../models/movieModel")
 
 // GET /api/favorites/all
 const getFavorites = asyncHandler(async (req, res) => {
+    console.log({ user: req.user })
     const favorites = await Favorite.find({ user: req.user })
 
     const favoriteIds = favorites.map((favorite) => favorite.movieId)
@@ -49,6 +50,8 @@ const deleteFavorite = asyncHandler(async (req, res) => {
         movieId: req.params.id,
         user: req.user.id,
     })
+
+    console.log({ favorite })
 
     // Check if it exists
     if (!favorite) {

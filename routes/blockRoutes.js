@@ -5,7 +5,7 @@ const {
     getBlocked,
     getBlockedIds,
     addBlocked,
-    deleteFBlocked,
+    deleteBlocked,
 } = require("../controllers/blockController.js")
 
 const { protect } = require("../middleware/authMiddleware")
@@ -13,6 +13,6 @@ const { protect } = require("../middleware/authMiddleware")
 router.get("/all", protect, getBlocked)
 router.get("/ids", protect, getBlockedIds)
 router.post("/", protect, addBlocked)
-router.delete("/:id", protect, deleteFBlocked)
+router.delete("/:id", protect, deleteBlocked)
 
 module.exports = router

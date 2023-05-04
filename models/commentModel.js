@@ -1,23 +1,22 @@
 const mongoose = require("mongoose")
 
-const favoriteSchema = mongoose.Schema(
+const commentModel = mongoose.Schema(
   {
     user: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "User",
     },
-    movieId: {
+    movie: {
       type: mongoose.Schema.Types.ObjectId,
       required: true,
       ref: "Movie",
     },
+    text: { type: String, required: true },
   },
   {
     timestamps: true,
   }
 )
 
-// favoriteSchema.index({ user: 1, id: 1 }, { unique: true })
-
-module.exports = mongoose.model("Favorite", favoriteSchema)
+module.exports = mongoose.model("Comment", commentModel)

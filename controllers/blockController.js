@@ -4,8 +4,8 @@ const User = require("../models/userModel")
 const Movies = require("../models/movieModel")
 const Block = require("../models/blockModel")
 
-// GET /api/blockList/all
-const getBlocked = asyncHandler(async (req, res) => {
+// GET /api/block/movies
+const getBlockedMovies = asyncHandler(async (req, res) => {
     const blockedMovieList = await Block.find({ user: req.user })
 
     const blockedIds = blockedMovieList.map(
@@ -21,9 +21,11 @@ const getBlocked = asyncHandler(async (req, res) => {
 
 // GET /api/block/ids
 const getBlockedIds = asyncHandler(async (req, res) => {
-    const blockedMovies = await Block.find({ user: req.user._id })
+    const blockedMovieIds = await Block.find({ user: req.user._id })
 
-    const blockedIds = blockedMovies.map((blockedMovie) => blockedMovie.movieId)
+    const blockedIds = blockedMovieIds.map(
+        (blockedMovie) => blockedMovie.movieId
+    )
 
     res.status(200).json(blockedIds)
 })
@@ -46,10 +48,14 @@ const addBlocked = asyncHandler(async (req, res) => {
         throw new Error("Already blocked")
     }
 
-    const blockedMovie = await Block.create({
+    await Block.create({
         movieId: req.body.movieId,
         user: req.user.id,
     })
+
+    const blockedMovie = await Movies.findById(req.body.movieId)
+
+    console.log({ blockedMovie })
 
     res.status(200).json(blockedMovie)
 })
@@ -85,8 +91,8 @@ const deleteBlocked = asyncHandler(async (req, res) => {
 })
 
 module.exports = {
-    getBlocked,
     getBlockedIds,
+    getBlockedMovies,
     addBlocked,
     deleteBlocked,
 }

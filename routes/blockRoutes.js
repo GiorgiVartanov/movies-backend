@@ -2,7 +2,7 @@ const express = require("express")
 const router = express.Router()
 
 const {
-    getBlocked,
+    getBlockedMovies,
     getBlockedIds,
     addBlocked,
     deleteBlocked,
@@ -10,8 +10,8 @@ const {
 
 const { protect } = require("../middleware/authMiddleware")
 
-router.get("/all", protect, getBlocked)
 router.get("/ids", protect, getBlockedIds)
+router.get("/movies", protect, getBlockedMovies)
 router.post("/", protect, addBlocked)
 router.delete("/:id", protect, deleteBlocked)
 

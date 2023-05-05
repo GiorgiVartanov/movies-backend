@@ -14,8 +14,8 @@ app.use(express.json())
 app.use(express.urlencoded({ extended: false }))
 
 const corsOptions = {
-  // origin: "https://movies-spp.netlify.app",
-  origin: "http://localhost:3000",
+  origin: "https://movies-spp.netlify.app",
+  // origin: "http://localhost:3000",
   credentials: true,
   optionSuccessStatus: 200,
 }
